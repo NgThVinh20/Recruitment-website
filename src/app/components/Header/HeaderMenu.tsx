@@ -1,6 +1,11 @@
 import Link from 'next/link'
 import { FaAngleRight, FaAngleDown, FaBars } from 'react-icons/fa6'
-export const HeaderMenu = () =>{
+export const HeaderMenu = (props : {
+  showMenu : boolean
+}) =>{
+  const { showMenu } = props;
+
+
   const menuList = [
     {
       name: 'Việc Làm IT',
@@ -73,15 +78,20 @@ export const HeaderMenu = () =>{
   ]
   return (
     <>
-      <nav className="lg:block hidden">
-        <ul className="flex gap-x-[30px]">
+      <nav className={
+        "lg:block " + (showMenu ? "fixed top-0 left-0 w-[280px] h-full bg-[#000065] z-10" : "hidden")
+        }>
+        <ul className="flex gap-x-[30px] flex-wrap">
           {menuList.map((item, index) => (
             <li 
               key ={index}
-              className="flex items-center gap-x-[8px] relative group/sub-1">
-              <Link href={item.link} className="font-[600] text-[16px] text-white">{item.name}</Link>
+              className="flex items-center gap-x-[8px] relative group/sub-1 flex-wrap lg:p-0 p-[10px] lg:w-auto w-full">
+              <Link href={item.link} className="font-[600] text-[16px] text-white lg:flex-none flex-1">{item.name}</Link>
+               {item.children && (
+                <FaAngleDown className="text-[16px] text-white" />
+              )}
               {item.children && (
-                <ul className="bg-[#000065] rounded-[4px] absolute top-[100%] left-0 w-[280px] hidden group-hover/sub-1:block">
+                <ul className="bg-[#000065] rounded-[4px] lg:absolute relative lg:top-[100%] top-0 left-0 lg:w-[280px] w-full hidden group-hover/sub-1:block">
                   {item.children.map((menuSub1, indexSub1)=>(
                     <li key ={indexSub1} className="py-[10px] px-[16px] flex items-center justify-between hover:bg-[#000096] rounded-[4px] group/sub-2">
                       <Link href={menuSub1.link} className="font-[600] text-[16px] text-white">
@@ -105,7 +115,6 @@ export const HeaderMenu = () =>{
                   ))}
                 </ul>
               )}
-              <FaAngleDown className="fa-solid text-[16px] text-white" />
             </li>
           ))}   
         </ul>  
