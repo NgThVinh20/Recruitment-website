@@ -15,6 +15,10 @@
   font-family: "Lexend", sans-serif;
 }
 
+svg{
+  display: inline-block;
+}
+
 /* Contain */
 .contain {
   width: 1184px;
